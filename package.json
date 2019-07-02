@@ -1,0 +1,28 @@
+{
+  "name": "blocipedia-node",
+  "version": "1.0.0",
+  "description": "A wiki-like site for creating wikis and markdowns.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "export NODE_ENV=test&& jasmine",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keolasin/blocipedia-node.git"
+  },
+  "author": "Matthew Reyes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keolasin/blocipedia-node/issues"
+  },
+  "homepage": "https://github.com/keolasin/blocipedia-node#readme",
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "jasmine": "^3.4.0",
+    "request": "^2.88.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
