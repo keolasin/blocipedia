@@ -1,8 +1,12 @@
+// require express, set up router
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.send("Welcome to blocipedia");
-});
+// require controller
+const staticController = require("../controllers/staticController");
 
+// define routes
+router.get("/", staticController.index);
+
+// export router
 module.exports = router;

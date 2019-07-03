@@ -30,13 +30,13 @@ module.exports = {
     app.use(expressValidator());
 
     // express session
-    /*app.use(session({
+    app.use(session({
       secret: process.env.cookieSecret,
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 1.21e+9 } // 14 day expiration
     }));
-    */
+
     // express flash
     app.use(flash());
 
