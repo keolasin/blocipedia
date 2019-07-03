@@ -6,6 +6,7 @@ const router = express.Router();
 const staticController = require("../controllers/staticController");
 
 // define routes
+  // GET
 router.get("/", staticController.index);
 
 // export router
