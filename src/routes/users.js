@@ -13,7 +13,7 @@ router.get("/users/sign_in", userController.signInForm);
 router.get("/users/sign_out", userController.signOut);
 
   // POST
-router.post("/users", validation.validateUsers, userController.create);
+router.post("/users/sign_up", validation.validateUsers, userController.create);
 router.post("/users/sign_in", validation.validateUsers, userController.signIn);
 
 // export router

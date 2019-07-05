@@ -45,15 +45,15 @@ describe("routes : users", () => {
 
 // POST
   // users
-  describe("POST /users", () => {
+  describe("POST /users/sign_up", () => {
     // creates new user and redirects
     it("should create a new user with valid input, and redirect", (done) => {
       const options = {
-        url: base,
+        url: `${base}sign_up`,
         form: {
           name: "Timmy Test",
           email: "tester@gmail.com",
-          password: "No Smoking"
+          password: "No Smoking123"
         }
       }
 

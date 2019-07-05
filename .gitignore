@@ -1,3 +1,4 @@
 /node_modules
 .env
 /src/db/config/config.json
+sendgrid.env

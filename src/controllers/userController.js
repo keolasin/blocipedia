@@ -1,6 +1,10 @@
 // require helper queries for db
 const userQueries = require("../db/queries.users.js");
 
+// sendGrid for email conf via twilio
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 // require passport for authentication
 const passport = require("passport");
 
@@ -24,7 +28,17 @@ module.exports = {
         passport.authenticate("local")(req, res, () => {
           req.flash("notice", "You've successfully signed in!");
           res.redirect("/");
-        })
+        });
+
+        // sendgrid email confirmation
+        const msg = {
+          to: newUser.email,
+          from: 'test@example.com',
+          subject: 'Welcome to blocipedia',
+          text: 'Welcome to blocipedia! As a new user, you can now create markdowns and share information with others!',
+          html: '<strong>Upgrade to a premium plan now!</strong>',
+        };
+        sgMail.send(msg);
       }
     });
   },
