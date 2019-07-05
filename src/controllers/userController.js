@@ -49,7 +49,7 @@ module.exports = {
 
   signIn(req, res, next){
     // auth via passport local strategy
-    passport.authenticate("local")(req, res, () => {
+    passport.authenticate("local")(req, res, function () {
       if(!req.user){
         req.flash("notice", "Sign in failed, please try again");
         res.redirect("/users/sign_in");

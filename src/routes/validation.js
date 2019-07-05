@@ -7,7 +7,7 @@ module.exports = {
     if(req.method === "POST"){
       req.checkBody("email", "must be valid.").isEmail();
       req.checkBody("password", "must be valid.").isLength( {min: 10} );
-      req.checkBody("passowrdConfirmation", "must match password provided.").optional().matches(req.body.password);
+      req.checkBody("password_conf", "must match password provided.").optional().matches(req.body.password);
     }
 
     // check for errors, flash errors, and redirect or continue
