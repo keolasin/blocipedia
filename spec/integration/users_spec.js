@@ -51,6 +51,7 @@ describe("routes : users", () => {
       const options = {
         url: base,
         form: {
+          name: "Timmy Test",
           email: "tester@gmail.com",
           password: "No Smoking"
         }
@@ -79,13 +80,13 @@ describe("routes : users", () => {
         {
           url: base,
           form: {
+            name: "Tiffany Tester",
             email: "wrong",
             password: "badpass"
           }
         },
         // second arg in above post() call, check User model
         (err, res, body) => {
-          console.log(`attempting to find/add email that is bad`);
           User.findOne({ where: { email: "wrong" }})
           .then((user) => {
             expect(user).toBeNull();

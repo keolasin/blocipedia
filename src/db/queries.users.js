@@ -14,6 +14,7 @@ module.exports = {
 
     // store hashed password in the database when we create and return the user object
     return User.create({
+      name: newUser.name,
       email: newUser.email,
       password: hashedPassword
     })
