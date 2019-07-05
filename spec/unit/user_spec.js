@@ -44,7 +44,7 @@ describe("User", () => {
         password: "Indie Coffee"
       })
       .then((user) => {
-        // we expect this to fail since there is an error, see catch()
+        // we expect this to fail since there is an error, see catch() for expectations
         done();
       })
       .catch((err) => {
@@ -53,6 +53,33 @@ describe("User", () => {
         done();
       });
     });
-  });
 
+    // test creation of a user with a duplicate email (email already taken)
+    it("should NOT create a User object with an already taken email", (done) => {
+      User.create({
+        email: "firstAscent@email.com",
+        password: "climberBeta"
+      })
+      .then((user) => {
+        User.create({
+          email: "firstAscent@email.com",
+          password: "followed the route"
+        })
+        .then((user) => {
+          // expect this to fail since there is an error, see catch() for expectations
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          expect(err.message).toContain("Validation error");
+          done();
+        });
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
+  });
 });
