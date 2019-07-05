@@ -9,9 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        type: Sequelize.STRING,
         validate: {
           isEmail: {msg: "Must be a valid email"}
         }

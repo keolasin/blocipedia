@@ -26,7 +26,7 @@ module.exports = {
     // assets
     app.use(express.static(path.join(__dirname, "..", "assets")));
 
-    // expressValidator
+    // validator
     app.use(expressValidator());
 
     // express session

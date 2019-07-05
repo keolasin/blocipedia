@@ -51,17 +51,17 @@ describe("routes : users", () => {
       const options = {
         url: base,
         form: {
-          email: "tester@email.com",
+          email: "tester@gmail.com",
           password: "No Smoking"
         }
       }
 
       // when our response returns, check that user has been created in the users model/database and confirm it was assigned an ID
       request.post(options, (err, res, body) => {
-        User.findOne({where: {email: "tester@email.com"} })
+        User.findOne({where: {email: "tester@gmail.com"} })
         .then( user => {
           expect(user).not.toBeNull();
-          expect(user.email).toBe("tester@email.com");
+          expect(user.email).toBe("tester@gmail.com");
           expect(user.id).toBe(1);
           done();
         })
@@ -83,8 +83,9 @@ describe("routes : users", () => {
             password: "badpass"
           }
         },
-        // second arg in post() call, check User model
+        // second arg in above post() call, check User model
         (err, res, body) => {
+          console.log(`attempting to find/add email that is bad`);
           User.findOne({ where: { email: "wrong" }})
           .then((user) => {
             expect(user).toBeNull();

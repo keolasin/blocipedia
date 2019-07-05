@@ -6,6 +6,9 @@ const passport = require("passport");
 
 module.exports = {
   create(req, res, next){
+
+    console.log('Create called');
+
     // pull values from our request body and add them to a newUser object
     let newUser = {
       email: req.body.email,
@@ -15,6 +18,8 @@ module.exports = {
 
     // use helper query createUser() from userQueries, pass in newUser and callback
     userQueries.createUser(newUser, (err, user) => {
+      console.log(`userQueries.createUser called`);
+
       if(err){ // check for and flash error if there is one
         req.flash("error", err);
         res.redirect("/users/sign_up");
