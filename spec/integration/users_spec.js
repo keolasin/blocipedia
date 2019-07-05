@@ -20,9 +20,10 @@ describe("routes : users", () => {
     });
   });
 
-  // GET /users/sign_up page
+// GET
+  // sign_up page
   describe("GET /users/sign_up", () => {
-    it("should render a view with a sign up form" ,(done) => {
+    it("should render a view with a sign up form", (done) => {
       request.get(`${base}sign_up`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("Sign Up");
@@ -31,9 +32,22 @@ describe("routes : users", () => {
     });
   });
 
-  // POST /users
+  // sign_in page
+  describe("GET /users/sign_in", () => {
+    it("should render a view with a sign in form", (done) => {
+      request.get(`${base}sign_in`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Sign In");
+        done();
+      });
+    });
+  });
+
+// POST
+  // users
   describe("POST /users", () => {
-    it("should create a new user with valid input and redirect", (done) => {
+    // creates new user and redirects
+    it("should create a new user with valid input, and redirect", (done) => {
       const options = {
         url: base,
         form: {
@@ -56,6 +70,32 @@ describe("routes : users", () => {
           done();
         });
       });
+    });
+
+    // submit a request with invalid values and expect NOT to create user
+    it("should NOT create a new user with invalid input, and redirect", (done) => {
+      request.post(
+        // incorrect values object for form/post request
+        {
+          url: base,
+          form: {
+            email: "wrong",
+            password: "badpass"
+          }
+        },
+        // second arg in post() call, check User model
+        (err, res, body) => {
+          User.findOne({ where: { email: "wrong" }})
+          .then((user) => {
+            expect(user).toBeNull();
+            done();
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          });
+        }
+      );
     });
   });
 
