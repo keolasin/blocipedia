@@ -1,3 +1,9 @@
+// require helper queries for db
+const userQueries = require("../db/queries.users.js");
+
+// require passport for authentication
+const passport = require("passport");
+
 module.exports = {
   create(req, res, next){
     // pull values from our request body and add them to a newUser object
