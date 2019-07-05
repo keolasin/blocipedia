@@ -31,5 +31,33 @@ describe("routes : users", () => {
     });
   });
 
+  // POST /users
+  describe("POST /users", () => {
+    it("should create a new user with valid input and redirect", (done) => {
+      const options = {
+        url: base,
+        form: {
+          email: "tester@email.com",
+          password: "No Smoking"
+        }
+      }
+
+      // when our response returns, check that user has been created in the users model/database and confirm it was assigned an ID
+      request.post(options, (err, res, body) => {
+        User.findOne({where: {email: "tester@email.com"} })
+        .then( user => {
+          expect(user).not.toBeNull();
+          expect(user.email).toBe("tester@email.com");
+          expect(user.id).toBe(1);
+          done();
+        })
+        .catch( err => {
+          console.log(err);
+          done();
+        });
+      });
+    });
+  });
+
 
 });
