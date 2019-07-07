@@ -7,8 +7,14 @@ const validation = require("./validation");
 const userController = require("../controllers/userController");
 
 // define routes
-router.get("/users/signup", userController.signUp);
-router.post("/users/signup", userController.signUp);
+  // GET
+router.get("/users/sign_up", userController.signUp);
+router.get("/users/sign_in", userController.signInForm);
+router.get("/users/sign_out", userController.signOut);
+
+  // POST
+router.post("/users/sign_up", validation.validateUsers, userController.create);
+router.post("/users/sign_in", validation.validateUsers, userController.signIn);
 
 // export router
 module.exports = router;
