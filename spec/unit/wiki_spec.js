@@ -1,4 +1,4 @@
-const sequelize = require("../../source/db/models/index").sequelize;
+const sequelize = require("../../src/db/models/index").sequelize;
 const Wiki = require("../../src/db/models").Wiki;
 const User = require("../../src/db/models").User;
 
@@ -9,7 +9,8 @@ describe("Wiki", () => {
     this.user;
 
     // start with empty database
-    sequelize.sync({fore: true}).then((res) => {
+    sequelize.sync({force: true})
+    .then((res) => {
       // create a user object to associate to the wiki page
       User.create({
         name: "Wendy Wiki",
@@ -22,7 +23,8 @@ describe("Wiki", () => {
         Wiki.create({
           title: "How to make the perfect burger",
           body: "First, forget everything you know about burgers.",
-          private: false
+          private: false,
+          userId: this.user.id
         })
         .then((wiki) => {
           this.wiki = wiki;
@@ -33,12 +35,13 @@ describe("Wiki", () => {
   });
 
   // tests for CREATE
-  it("#create()", () => {
+  describe("#create()", () => {
     // successful creation with correct parameters
     it("should create the wiki object with a title and body", (done) => {
       Wiki.create({
         title: "Stand-up Paddle-boarding",
         body: "The trick to stand-up paddle-boarding is to stand up!",
+        userId: this.user.id,
         private: false
       })
       .then((wiki) => {
