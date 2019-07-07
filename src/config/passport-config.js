@@ -27,7 +27,7 @@ module.exports = {
     }));
 
     passport.serializeUser((user, callback) => {
-      callback(null, user, id);
+      callback(null, user.id);
     });
 
     passport.deserializeUser((id, callback) => {
