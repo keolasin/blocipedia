@@ -32,14 +32,93 @@ function authorizeUser(role, done) { // helper function to create and authorize 
 
 // wikis route
 describe("routes : wikis", () => {
+  this.user;
+  this.wiki;
+
   beforeEach((done) => {
     sequelize.sync({force: true})
-    .then(() => {
-      done();
+    .then((res) => {
+      User.create({
+        name: "Chris Creator",
+        email: "Chris@email.com",
+        password: "wiki CRUD is great",
+        role: role
+      })
+      .then((user) => {
+        this.user = user;
+
+        Wiki.create({
+          title: "How to create wikis",
+          body: "This wiki will tell you all about CRUD for wikis",
+          private: false,
+          userId: this.user.id
+        })
+        .then((wiki) => {
+          this.wiki = wiki;
+          done();
+        });
+      });
     })
     .catch(err => {
       console.log(err);
       done();
     });
   });
-})
+
+  // guest visitor
+  describe("visitor (not signed in) attempting to perform CRUD actions for Wiki", () => {
+    beforeEach((done) => {    // before each suite in this context
+      request.get(
+        {           // mock authentication
+          url: "http://localhost:3000/auth/fake",
+          form: {
+            userId: 0 // flag to indicate mock auth to destroy any session
+          }
+        },
+        (err, res, body) => {
+          done();
+        }
+      );
+    });
+
+    describe("POST /wikis/create", () => {
+      it("should not create a new wiki", (done) => {
+
+      });
+    });
+
+    describe("POST /wikis/:wikiId/destroy", () => {
+      it("should not delete the wiki with the associated id", (done) => {
+
+      });
+    });
+  });
+
+  // free user context
+  describe("free user perform CRUD actions for public wikis", () => {
+    beforeEach((done) => {    // before each suite in this context
+       request.get({          // mock authentication
+         url: "http://localhost:3000/auth/fake",
+         form: {
+           role: "free",     // mock authenticate as free user
+           userId: this.user.id
+         }
+       },
+         (err, res, body) => {
+           done();
+         }
+       );
+    });
+
+    // free user creating public wikis
+    describe("POST /wikis/create", () => {
+      it("should create a new wiki and redirect", (done) => {
+        
+      })
+    })
+  });
+
+  // premium user context
+
+  // admin user context
+});
