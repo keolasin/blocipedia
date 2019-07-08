@@ -71,4 +71,34 @@ describe("Wiki", () => {
       });
     });
   });
+
+  // tests for getting/setting User
+  describe("#setUser()", () => {
+    it("should associate a wiki and a user together", (done) => {
+      User.create({
+        name: "Sally Setter",
+        email: "Sally@gmail.com",
+        password: "has to be at least 10 characters",
+      })
+      .then((newUser) => {
+        expect(this.wiki.userId).toBe(this.user.id);
+        this.wiki.setUser(newUser)
+        .then((wiki) => {
+          expect(this.wiki.userId).toBe(newUser.id);
+          done();
+        });
+      })
+    });
+  });
+
+  // getUser test
+  describe("#getUser()", () => {
+    it("should return the associated user", (done) => {
+      this.wiki.getUser()
+      .then((associatedUser) => {
+        expect(associatedUser.email).toBe("Burgers@gmail.com");
+        done();
+      });
+    });
+  });
 });
