@@ -13,12 +13,7 @@ module.exports = {
   },
 
   getWiki(id, callback){
-    return Wiki.findById(id, {
-      include: [{
-        model: Post,
-        as: "posts"
-      }]
-    })
+    return Wiki.findById(id)
     .then((wiki) => {
       callback(null, wiki);
     })
@@ -30,7 +25,9 @@ module.exports = {
   addWiki(newWiki, callback){
     return Wiki.create({
       title: newWiki.title,
-      description: newWiki.description
+      body: newWiki.body,
+      private: newWiki.private,
+      userId: newWiki.userId
     })
     .then((wiki) => {
       callback(null, wiki);

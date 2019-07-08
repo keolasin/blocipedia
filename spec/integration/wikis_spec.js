@@ -1,4 +1,4 @@
-const sequelize = require("../../source/db/models/index").sequelize;
+const sequelize = require("../../src/db/models/index").sequelize;
 const Wiki = require("../../src/db/models").Wiki;
 const User = require("../../src/db/models").User;
 
@@ -37,6 +37,7 @@ describe("routes : wikis", () => {
   this.wiki;
   this.secretWiki;
 
+  // start with clear database, then create a new user, public wiki, and private wiki
   beforeEach((done) => {
     sequelize.sync({force: true})
     .then((res) => {
