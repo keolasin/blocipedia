@@ -7,7 +7,7 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   edit() {
-    return this.user != null;
+    return (this.user != null && (!this.record.private) || this._isOwner());
   }
 
   update() {
