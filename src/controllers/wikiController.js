@@ -19,15 +19,15 @@ module.exports = {
   new(req, res, next){
     // access the request object and passport can use req.user
     // create new instance of policy class
-     const authorized = new Authorizer(req.user).new();
+    const authorized = new Authorizer(req.user).new();
 
-     //render the wiki form or flash a notice and redirect
-     if(authorized) {
-       res.render("wikis/new");
-     } else {
-       req.flash("notice", "You are not authorized to do that.");
-       res.redirect("/wikis");
-     }
+    //render the wiki form or flash a notice and redirect
+    if(authorized) {
+      res.render("wikis/new");
+    } else {
+      req.flash("notice", "You are not authorized to do that.");
+      res.redirect("/wikis");
+    }
   },
 
   create(req, res, next){
@@ -47,7 +47,7 @@ module.exports = {
          if(err){
            res.redirect(500, "wikis/new");
          } else {
-           res.redirect(303, `/wikis/${wiki.id}`);
+           res.redirect(303, `/wikis`);
          }
        });
      } else {

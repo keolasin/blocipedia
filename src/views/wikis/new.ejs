@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <h1>New Wiki</h1>
+
+      <form action="/wikis/create" method="post">
+        <div class="form-group">
+          <label for="title">Wiki title</label>
+          <input type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
+        </div>
+        <div class="form-group">
+          <label for="body">Information about your subject</label>
+          <textarea rows="4" class="form-control" name="body" placeholder="Enter Information"></textarea>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="private" value="false" checked>
+          <label class="form-check-label" for="private">Public (default)</label>
+        </div>
+        <% if(currentUser.role !== "admin" || currentUser.role !== "premium"){ %>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="private" value="false" disabled>
+            <label class="form-check-label" for="private">Private</label>
+          </div>
+        <% }else{ %>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="private" value="true">
+            <label class="form-check-label" for="private">Private</label>
+          </div>
+        <% } %>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

@@ -45,7 +45,7 @@ describe("routes : wikis", () => {
         name: "Chris Creator",
         email: "Chris@email.com",
         password: "wiki CRUD is great",
-        role: role
+        role: "standard"
       })
       .then((user) => {
         this.user = user;
@@ -136,7 +136,7 @@ describe("routes : wikis", () => {
       it("should return a status code of 200, and all public wikis", (done) => {
         request.get(base, (err, res, body) => {
           expect(res.statusCode).toBe(200);
-          expect(err.toBeNull);
+          expect(err).toBeNull();
           expect(body).toContain("How to create wikis");
           expect(body).not.toContain("Super secret club");
           done();
@@ -168,13 +168,13 @@ describe("routes : wikis", () => {
 
     // Destroy
     describe("POST /wikis/:wikiId/destroy", () => {
-      it("should not delete the wiki with the associated id", (done) => {
+      it("should NOT delete the wiki with the associated id", (done) => {
         Wiki.findAll()
         .then((wikis) => {
           const wikiCountBeforeDelete = wikis.length;
           expect(wikiCountBeforeDelete).toBe(2);
 
-          request.post(`${base}wikiId/destroy`, (err, res, body) => {
+          request.post(`${base}${this.wiki.id}/destroy`, (err, res, body) => {
             Wiki.findAll()
             .then((wikis) => {
               expect(err).toBeNull();
@@ -193,6 +193,7 @@ describe("routes : wikis", () => {
        request.get({          // mock authentication
          url: "http://localhost:3000/auth/fake",
          form: {
+           name: this.user.name,
            role: "standard",     // mock authenticate as standard user
            userId: this.user.id
          }
@@ -252,7 +253,7 @@ describe("routes : wikis", () => {
       it("should return a status code of 200, and all public wikis", (done) => {
         request.get(base, (err, res, body) => {
           expect(res.statusCode).toBe(200);
-          expect(err.toBeNull);
+          expect(err).toBeNull();
           expect(body).toContain("How to create wikis");
           expect(body).not.toContain("Super secret club");
           done();
@@ -330,7 +331,7 @@ describe("routes : wikis", () => {
     describe("POST /wikis/:id/destroy", () => {
 
       it("should delete the wiki with the associated id", (done) => {
-        wiki.findAll()
+        Wiki.findAll()
         .then((wikis) => {
           const wikiCountBeforeDelete = wikis.length;
           expect(wikiCountBeforeDelete).toBe(2);
@@ -354,6 +355,7 @@ describe("routes : wikis", () => {
          // create the alt user
          User.create({
            email: "tom@myspace.com",
+           name: "tommy",
            password: "will always be your friend",
            role: "standard"
          }).then( user => {
@@ -362,6 +364,7 @@ describe("routes : wikis", () => {
              {
                url: "http://localhost:3000/auth/fake",
                form: {
+                 name: user.name,
                  role: user.role,
                  userId: user.id,
                  email: user.email

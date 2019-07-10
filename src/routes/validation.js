@@ -27,14 +27,13 @@ module.exports = {
       req.checkBody("title", "must be valid.").isLength( {min: 4} );
       req.checkBody("body", "must be valid.").isLength( {min: 6} );
       req.checkBody("private", "must be true or false").isBoolean();
-      req.checkBody("userId", "must have an assigned owner").notEmpty().isInt();
     }
 
 
     const errors = req.validationErrors();
 
     if(errors){
-      req.flash("error", error);
+      req.flash("error", errors);
       return res.redirect(303, req.headers.referer);
     } else {
       return next();
