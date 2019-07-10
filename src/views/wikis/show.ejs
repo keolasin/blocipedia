@@ -8,10 +8,13 @@
 
     <main class="container">
       <h1><%= wiki.title %></h1>
+
+      <% include ../static/partials/messages.ejs %>
+
       <p><%= wiki.body %></p>
 
       <% if(currentUser) { %>
-        <a href="/wikis/<%= wiki.id %>/new" class="btn btn-success">New Wiki</a>
+        <a href="/wikis/new" class="btn btn-success">New Wiki</a>
         <% if(currentUser) { %>
           <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit Wiki</a>
           <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">

@@ -10,6 +10,7 @@
 
       <h1>Edit Wiki</h1>
 
+      <% include ../static/partials/messages.ejs %>
 
       <form action="/wikis/<%= wiki.id %>/update" method="post">
         <div class="form-group">
@@ -35,7 +36,7 @@
             <label class="form-check-label" for="public">Private</label>
           </div>
         <% } %>
-        
+
         <button type="submit" class="btn btn-primary">Update</button>
 
       </form>

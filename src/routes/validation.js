@@ -26,7 +26,7 @@ module.exports = {
     if(req.method === "POST"){
       req.checkBody("title", "must be valid.").isLength( {min: 4} );
       req.checkBody("body", "must be valid.").isLength( {min: 6} );
-      req.checkBody("private", "must be true or false").isBoolean();
+      //req.checkBody("private", "must be true or false").isBoolean();
     }
 
 

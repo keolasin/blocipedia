@@ -73,9 +73,9 @@ module.exports = {
     // pass the request object to the deleteWiki method
      wikiQueries.deleteWiki(req, (err, wiki) => {
        if(err){
-         res.redirect(err, `/wikis/${req.params.id}`)
+         res.redirect(`/wikis/${req.params.id}`)
        } else {
-         res.redirect(303, "/wikis")
+         res.redirect(302, "/wikis")
        }
      });
    },
@@ -84,7 +84,8 @@ module.exports = {
     // query for the wiki with the matching id from the url params
      wikiQueries.getWiki(req.params.id, (err, wiki) => {
        if(err || wiki == null){
-         res.redirect(404, "/");
+         console.log(err);
+         res.redirect(`/wikis/${req.params.id}`);
        } else {
          //if we find the wiki, pass it to the policy constructor along with signed in user - call edit from policy class
          const authorized = new Authorizer(req.user, wiki).edit();
@@ -93,7 +94,7 @@ module.exports = {
          if(authorized){
            res.render("wikis/edit", {wiki});
          } else {
-           req.flash("You are not authorized to do that.")
+           req.flash("notice", "You are not authorized to do that.")
            res.redirect(`/wikis/${req.params.id}`)
          }
        }
@@ -104,6 +105,7 @@ module.exports = {
      console.log(`wikiController.update called successfully, calling wikiQueries.updateWiki() next`);
       wikiQueries.updateWiki(req, req.body, (err, wiki) => {
         if(err || wiki == null){
+          console.log(err);
           res.redirect(401, `/wikis/${req.params.id}/edit`);
         } else {
           res.redirect(`/wikis/${req.params.id}`);
