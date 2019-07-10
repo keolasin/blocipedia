@@ -101,6 +101,7 @@ module.exports = {
    },
 
    update(req, res, next){
+     console.log(`wikiController.update called successfully, calling wikiQueries.updateWiki() next`);
       wikiQueries.updateWiki(req, req.body, (err, wiki) => {
         if(err || wiki == null){
           res.redirect(401, `/wikis/${req.params.id}/edit`);
