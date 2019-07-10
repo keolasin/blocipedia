@@ -7,7 +7,7 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   edit() {
-    return this._isOwner();
+    return this.user != null;
   }
 
   update() {
@@ -15,6 +15,6 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   destroy() {
-    return this.update();
+    return this._isOwner();
   }
 }
