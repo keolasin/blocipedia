@@ -67,7 +67,10 @@ module.exports = {
     })
     .then(charge => {
       userQueries.upgrade(req.user.dataValues.id);
+      console.log("Payment successfull trying to flash/redirect");
       req.flash("notice", "Payment successful!");
+      console.log("flash successful");
+      res.render("users/upgrade", {stripeAPIKey});
     });
   },
 

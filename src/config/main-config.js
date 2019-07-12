@@ -37,6 +37,7 @@ module.exports = {
       cookie: { maxAge: 1.21e+9 } // 14 day expiration
     }));
 
+
     // express flash
     app.use(flash());
 

@@ -31,8 +31,10 @@ module.exports = {
     return User.findById(id)
     .then((user) => {
       if(!user) {
+        // console.log to find hang-up
         return callback("User not found!");
       } else {
+        // console.log to find hang-up
         return user.update({ role: "premium" });
       }
     })
