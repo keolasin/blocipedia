@@ -5,6 +5,10 @@ const userQueries = require("../db/queries.users.js");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// stripe payment
+const stripe = require('stripe')(process.env.stripeKey);
+const stripeAPIKey = process.env.stripePublic;
+
 // require passport for authentication
 const passport = require("passport");
 
@@ -41,6 +45,36 @@ module.exports = {
         sgMail.send(msg);
       }
     });
+  },
+
+  upgrade(req, res, next) {
+    res.render("users/upgrade", {stripeAPIKey});
+  },
+
+  payment(req, res, next){
+    let payment = 1500;
+    stripe.customers.create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken
+    })
+    .then((customer) => {
+      stripe.charges.create({
+        amount: payment,
+        description: "Blocipedia Premium Membership",
+        currency: "usd",
+        customer: customer.id
+      });
+    })
+    .then(charge => {
+      userQueries.upgrade(req.user.dataValues.id);
+      req.flash("notice", "Payment successful!");
+    });
+  },
+
+  downgrade(req, res, next){
+    userQueries.downgrade(req.user.dataValues.id);
+    req.flash("notice", "You are no longer a premium user");
+    res.redirect("/");
   },
 
   signUp(req, res, next){

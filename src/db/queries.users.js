@@ -24,5 +24,35 @@ module.exports = {
     .catch((err) => {
       callback(err);
     })
+  },
+
+  // upgrade user role in database
+  upgrade(id){
+    return User.findById(id)
+    .then((user) => {
+      if(!user) {
+        return callback("User not found!");
+      } else {
+        return user.update({ role: "premium" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  },
+
+  // downgrade user role in database
+  downgrade(id){
+    return User.findById(id)
+    .then((user) => {
+      if(!user) {
+        return callback("User not found!");
+      } else {
+        return user.update({ role: "standard" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 }

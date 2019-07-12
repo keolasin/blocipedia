@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <% include ../static/partials/navbar.ejs %>
+    <main class="container">
+      <% include ../static/partials/messages.ejs %>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Standard members</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Free</h6>
+          <p class="card-text">Create and edit wikis</p>
+          <p class="card-text">Only able to create public wikis</p>
+          <% if(currentUser && currentUser.role === 'premium') { %>
+            <form action="/users/<%=currentUser.id%>/downgrade" method="POST">
+              <button type="submit" class="btn btn-danger">Downgrade account</button>
+            </form>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Premium members</h5>
+          <h6 class="card-subtitle mb-2 text-muted">$15.00</h6>
+          <p class="card-text">Create and edit wikis</p>
+          <p class="card-text">Create private wikis viewable only to you and collaborators</p>
+          <% if(currentUser && currentUser.role === 'standard') { %>
+            <form action="/users/<%=currentUser.id%>/upgrade" method="POST">
+              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="<%=stripeAPIKey%>" data-amount="1500" data-name="Demo Site" data-description="Blocipedia Premium Membership" data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto">
+              </script>
+            </form>
+          <% } %>
+        </div>
+      </div>
+    </main>
+    <% include ../static/partials/baseScripts.ejs %>
+  </body>
+</html>

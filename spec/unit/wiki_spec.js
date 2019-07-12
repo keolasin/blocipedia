@@ -15,7 +15,8 @@ describe("Wiki", () => {
       User.create({
         name: "Wendy Wiki",
         email: "Burgers@gmail.com",
-        password: "Redhair and freckles"
+        password: "Redhair and freckles",
+        role: "standard"
       })
       .then((user) => {
         this.user = user;
@@ -56,7 +57,7 @@ describe("Wiki", () => {
       });
     });
 
-    // bad parameters, unsucssesful creation
+    // bad parameters, unsucssesful creation (missing body)
     it("should NOT create the wiki object if it's missing a title, body, or private boolean", (done) => {
       Wiki.create({
         title: "Cloud Sailing",
@@ -69,6 +70,10 @@ describe("Wiki", () => {
         expect(err.message).toContain("Wiki.body cannot be null");
         done();
       });
+    });
+
+    it("should NOT create the private wiki object if the user is not premium", (done) =>{
+
     });
   });
 

@@ -25,7 +25,7 @@
           <input class="form-check-input" type="radio" name="private" value="false" checked>
           <label class="form-check-label" for="private">Public (default)</label>
         </div>
-        <% if(currentUser.role !== "admin" || currentUser.role !== "premium"){ %>
+        <% if(currentUser.role !== "premium"){ %>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="private" value="false" disabled>
             <label class="form-check-label" for="private">Private</label>
