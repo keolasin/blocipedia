@@ -3,15 +3,15 @@ const ApplicationPolicy = require("./application");
 module.exports = class WikiPolicy extends ApplicationPolicy {
 
   new() {
-    return this._isMember() || this._isPremium() || this._isAdmin();
+    return this._isStandard() || this._isPremium() || this._isAdmin();
   }
 
   create() {
-    this.new()
+    return this.new();
   }
 
   edit() {
-    return (this._isOwner() && (this._isPremium() || this._isStandard() || this._isAdmin()));
+    return this._isOwner();
   }
 
   update() {

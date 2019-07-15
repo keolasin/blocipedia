@@ -38,7 +38,6 @@ module.exports = {
   },
 
   deleteWiki(req, callback){
-
     // searches for wiki matching the id in the req.params
     return Wiki.findById(req.params.id)
     .then((wiki) => {

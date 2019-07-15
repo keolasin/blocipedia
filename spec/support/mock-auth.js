@@ -4,7 +4,7 @@ module.exports = {
   fakeIt(app){
 
     // keep outside of middleware fxn
-    let role, id, email;
+    let role, id, email, name;
 
     // middleware def
     function middleware(req,res,next){
@@ -13,13 +13,15 @@ module.exports = {
       role = req.body.role || role;
       id = req.body.userId || id;
       email = req.body.email || email;
+      name = req.body.name || name;
 
       //loads the auth user in req.user, and if id has value, 0 = signing out
       if(id && id != 0){
         req.user = {
           "id": id,
           "email": email,
-          "role": role
+          "role": role,
+          "name": name
         };
       } else if(id == 0) {
         delete req.user;

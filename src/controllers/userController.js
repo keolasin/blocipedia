@@ -1,5 +1,6 @@
 // require helper queries for db
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js");
 
 // sendGrid for email conf via twilio
 const sgMail = require("@sendgrid/mail");
@@ -76,6 +77,7 @@ module.exports = {
 
   downgrade(req, res, next){
     userQueries.downgrade(req.user.dataValues.id);
+    wikiQueries.makeWikisPublic(req.user.id);
     req.flash("notice", "You are no longer a premium user");
     res.redirect("/");
   },

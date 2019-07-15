@@ -32,7 +32,7 @@ function authorizeUser(role, done) { // helper function to create and authorize 
 }
 
 // wikis route
-describe("routes : wikis", () => {
+describe("routes : wikis, ", () => {
   this.user;
   this.wiki;
   this.secretWiki;
@@ -79,7 +79,7 @@ describe("routes : wikis", () => {
   });
 
   // guest visitor context
-  describe("visitor (not signed in) attempting to perform CRUD actions for Wiki", () => {
+  describe("visitor (not signed in) attempting to perform CRUD actions for Wiki : ", () => {
     beforeEach((done) => {    // before each suite in this context
       request.get(
         {           // mock authentication
@@ -188,12 +188,13 @@ describe("routes : wikis", () => {
   });
 
   // standard user context
-  describe("standard user perform CRUD actions for public wikis", () => {
+  describe("standard user perform CRUD actions for public wikis : ", () => {
     beforeEach((done) => {    // before each suite in this context
        request.get({          // mock authentication
          url: "http://localhost:3000/auth/fake",
          form: {
            name: this.user.name,
+           email: this.user.email,
            role: "standard",     // mock authenticate as standard user
            userId: this.user.id
          }

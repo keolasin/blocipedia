@@ -17,11 +17,15 @@
 
       <ul class="list-group">
         <% wikis.forEach((wiki) => { %>
-          <% if(wiki.private){ %>
+          <% if((wiki.private || !wiki.private) && role === "premium"){ %>
             <li class="list-group-item">
-              <a href="/wikis/<%= wiki.id %>"> Private wiki, upgrade to view! </a>
+              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
             </li>
-          <% } else { %>
+          <% } else if ((wiki.private) && role === "standard"){ %>
+            <li class="list-group-item">
+              <a href="/users/upgrade"> Private wiki, upgrade to view! </a>
+            </li>
+          <% } else if (!wiki.private){ %>
             <li class="list-group-item">
               <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
             </li>

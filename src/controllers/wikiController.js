@@ -6,13 +6,20 @@ module.exports = {
 
   // index page of all wikis to view
   index(req, res, next){
+    let role;
+    if(req.user){
+      role = req.user.role;
+    } else {
+      role = false;
+    }
+
     wikiQueries.getAllWikis((err, wikis) => {
       if(err){
         res.redirect(500, "static/index");
       } else {
-        res.render("wikis/index", {wikis});
+        res.render("wikis/index", {wikis, role});
       }
-    })
+    });
   },
 
   // creating new wiki route
@@ -101,7 +108,6 @@ module.exports = {
    },
 
    update(req, res, next){
-     console.log(`wikiController.update called successfully, calling wikiQueries.updateWiki() next`);
       wikiQueries.updateWiki(req, req.body, (err, wiki) => {
         if(err || wiki == null){
           console.log(err);
