@@ -22,13 +22,11 @@ module.exports = {
   // wiki validation
   validateWikis(req, res, next){
 
-    // check for form POST, then ensure wiki has a title, body, owner, and private boolean assigned
+    // check for form POST, then ensure wiki has a title, body
     if(req.method === "POST"){
       req.checkBody("title", "must be valid.").isLength( {min: 4} );
       req.checkBody("body", "must be valid.").isLength( {min: 6} );
-      //req.checkBody("private", "must be true or false").isBoolean();
     }
-
 
     const errors = req.validationErrors();
 

@@ -40,7 +40,7 @@ module.exports = {
        let newWiki = {
          title: req.body.title,
          body: req.body.body,
-         private: false,
+         private: req.body.private,
          userId: req.user.id
        };
        wikiQueries.addWiki(newWiki, (err, wiki) => {
@@ -51,7 +51,6 @@ module.exports = {
          }
        });
      } else {
-
        // if not authorized, flash error and redirect
        req.flash("notice", "You are not authorized to do that.");
        res.redirect("/wikis");

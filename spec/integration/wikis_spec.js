@@ -61,7 +61,7 @@ describe("routes : wikis", () => {
 
           Wiki.create({
             title: "Super secret club",
-            body: "This is a priavte wiki for the secret club",
+            body: "This is a private wiki for the secret club",
             private: true,
             userId: this.user.id
           })
@@ -279,7 +279,7 @@ describe("routes : wikis", () => {
       it("should render a view with an edit wiki form", (done) => {
         request.get(`${base}${this.wiki.id}/edit`, (err, res, body) => {
           expect(err).toBeNull();
-          
+
           //expect(body).toContain("Edit Wiki");
           //expect(body).toContain("This wiki will tell you all about CRUD for wikis");
           done();

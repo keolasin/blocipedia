@@ -72,8 +72,20 @@ describe("Wiki", () => {
       });
     });
 
-    it("should NOT create the private wiki object if the user is not premium", (done) =>{
-
+    it("should NOT create the private wiki object if the user is not a premium member", (done) =>{
+      Wiki.create({
+        title: "Snail racing",
+        body: "Snails actually go faster than one might think",
+        userId: this.user.id, // user created above has role of "standard"
+        private: true // setting wiki to private
+      })
+      .then((wiki) => {
+        // should not evaluate since the user is "standard" and cannot create private wikis
+      })
+      .catch((err) => {
+        expect(err.message).toContain("You are not authorized to do that.");
+        done();
+      });
     });
   });
 

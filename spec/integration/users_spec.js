@@ -43,6 +43,18 @@ describe("routes : users", () => {
     });
   });
 
+  // upgrade page
+  describe("GET /users/upgrade", () => {
+    it("should render a view with info to upgrade/downgrade an account", (done) => {
+      request.get(`${base}upgrade`,(err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Standard members");
+        expect(body).toContain("Premium members");
+        done();
+      });
+    });
+  });
+
 // POST
   // users
   describe("POST /users/sign_up", () => {
@@ -93,7 +105,7 @@ describe("routes : users", () => {
             done();
           })
           .catch((err) => {
-            console.log(err);
+            expect(err).toContain('Unauthorized');
             done();
           });
         }
@@ -101,5 +113,48 @@ describe("routes : users", () => {
     });
   });
 
+  // Upgrade
+  describe("POST /users/upgrade", () => {
+    beforeEach((done) => {
+      sequelize.sync({force: true})
+      .then((res) => {
+        User.create({
+          name: "Paulina Premo",
+          email: "moneyIsNothing@gmail.com",
+          password: "Bill gates is nothing to me",
+          role: "standard"
+        })
+        .then((user) => {
+          this.user = user;
+          done();
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
+
+    it("should upgrade a standard user paying via stripe and redirect", (done) => {
+      const options = {
+        url: `${base}upgrade`,
+        form: {
+          email: "moneyIsNothing@gmail.com",
+
+        }
+      }
+      request.post(options, (err, res, next) => {
+        User.findOne({ where: {email: "moneyIsNothing@gmail.com"}})
+        .then(user => {
+          expect(user.role).toBe("premium");
+          done();
+        })
+        .catch((err)=> {
+          console.log(err);
+          done();
+        });
+      });
+    });
+  });
 
 });
