@@ -1,5 +1,10 @@
+// query the model
 const wikiQueries = require("../db/queries.wikis.js");
 
+// convert markdown to html using markdown module
+const markdown = require("markdown").markdown;
+
+// policies/auth
 const Authorizer = require("../policies/wiki");
 
 module.exports = {
@@ -69,7 +74,9 @@ module.exports = {
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
-        res.render("wikis/show", {wiki});
+        let content = markdown.toHTML(wiki.body);
+        console.log(content);
+        res.render("wikis/show", {wiki, content});
       }
     });
   },

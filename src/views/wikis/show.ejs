@@ -11,7 +11,7 @@
 
       <% include ../static/partials/messages.ejs %>
 
-      <p><%= wiki.body %></p>
+      <div class="container"><%- content %></div>
 
       <% if(currentUser) { %>
         <a href="/wikis/new" class="btn btn-success">New Wiki</a>
