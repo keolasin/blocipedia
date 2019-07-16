@@ -1,5 +1,5 @@
 // query the model
-const collabQueries = require("../db/queries.collabs.js");
+const collabQueries = require("../db/queries.collaborators.js");
 const wikiQueries = require("../db/queries.wikis.js");
 
 // policies/auth
