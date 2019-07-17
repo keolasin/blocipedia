@@ -13,7 +13,11 @@ module.exports = {
   },
 
   getWiki(id, callback){
-    return Wiki.findById(id)
+    return Wiki.findById(id, {
+      include: [
+        { model: Collaborator, as: "collaborators"}
+      ]
+    })
     .then((wiki) => {
       callback(null, wiki);
     })

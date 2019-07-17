@@ -105,7 +105,8 @@ module.exports = {
 
          // render edit view if authorized or flash error and redirect
          if(authorized){
-           res.render("wikis/edit", {wiki});
+           // pass the wiki, and the collaborators associated with the wiki
+           res.render("wikis/edit", {wiki, collaborator});
          } else {
            req.flash("notice", "You are not authorized to do that.")
            res.redirect(`/wikis/${req.params.id}`)

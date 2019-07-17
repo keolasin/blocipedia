@@ -32,5 +32,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     // associations can be defined here
   };
+
+  Wiki.prototype.getCollaboratorsFor = function(wikiId){
+    return this.collaborators.find((collaborator) => {
+      return collaborator.wikiId == wikiId;
+    });
+  };
+  
   return Wiki;
 };

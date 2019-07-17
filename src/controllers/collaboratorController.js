@@ -17,8 +17,24 @@ module.exports = {
     });
   },
 
+  // update collaborators
+  update(req, res, next){
+    wikiQueries.getWiki(req.params.wikiId, (err, wiki) => {
+      let associatedWiki = wiki["wiki"];
+      let associatedCollaborators = result["collaborators"];
+      if(err || wiki === null){
+        res.redirect(404, "/");
+      } else {
+        const authorized = new Authorizer(req.user, associatedWiki, associatedCollaborators).update();
+        if(authorized){
+          res.render("collaborating")
+        }
+      }
+    })
+  },
+
   // remove collaborators
-  remove(req, res, next){
+  destroy(req, res, next){
     if(!req.user){
       collabQueries.remove(req, (err, collaborator) => {
         if(err){
