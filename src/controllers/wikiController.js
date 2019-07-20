@@ -76,7 +76,7 @@ module.exports = {
       } else {
         let content = markdown.toHTML(wiki.body);
         console.log(content);
-        res.render("wikis/show", {wiki, content});
+        res.render("wikis/show", {wiki, content, collaborator});
       }
     });
   },

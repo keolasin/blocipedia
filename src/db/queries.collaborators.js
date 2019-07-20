@@ -1,21 +1,24 @@
+// require models
 const User = require('./models').User;
 const Wiki = require('./models').Wiki;
 const Collaborator = require('./models').Collaborator;
+
+// require auth/policies
 const Authorizer = require("../policies/application");
 
 module.exports = {
 
   // add query
-  add(req, callback){
+  addCollaborator(req, callback){
     if (req.user.name === req.body.collaborator){
       return callback("You're the owner - you can't be a collaborator!");
     }
     User.findAll({
       where: {
-        name: req.body.collaborator
+        email: req.body.collaborator
       }
     })
-    .then((users)=>{
+    .then((users) => {
       if(!users){
         return callback("User not found.");
       }

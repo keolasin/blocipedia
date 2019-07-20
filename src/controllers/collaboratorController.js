@@ -8,13 +8,16 @@ const Authorizer = require("../policies/collaborator");
 module.exports = {
   // add collaborators
   add(req, res, next){
-    collabQueries.add(req, (err, collaborator) => {
-      if(err){
-        req.flash("error", err);
-      } else {
-        res.redirect(req.headers.referer);
-      }
-    });
+    if(req.user){
+      collabQueries.addCollaborator(req, (err, collaborator) => {
+        if(err){
+          req.flash("error", err);
+        }
+      });
+    } else {
+      req.flash("notice", "You must be signed in to do that".);
+    }
+    res.redirect(req.headers.referer);
   },
 
   // update collaborators
@@ -35,13 +38,12 @@ module.exports = {
 
   // remove collaborators
   destroy(req, res, next){
-    if(!req.user){
+    if(req.user){
       collabQueries.remove(req, (err, collaborator) => {
         if(err){
           req.flash("error", err);
-        } else {
-          res.redirect(req.headers.referer);
         }
+        res.redirect(req.headers.referer);
       });
     } else {
       req.flash("notice", "You must be signed in to do that.");

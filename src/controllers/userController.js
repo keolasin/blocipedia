@@ -14,6 +14,7 @@ const stripeAPIKey = process.env.stripePublic;
 const passport = require("passport");
 
 module.exports = {
+  // create
   create(req, res, next){
     // pull values from our request body and add them to a newUser object
     let newUser = {
@@ -48,6 +49,7 @@ module.exports = {
     });
   },
 
+  // payment management
   upgrade(req, res, next) {
     res.render("users/upgrade", {stripeAPIKey});
   },
@@ -82,6 +84,7 @@ module.exports = {
     res.redirect("/");
   },
 
+  //signing in/out and sign in form
   signUp(req, res, next){
     res.render("users/sign_up");
   },

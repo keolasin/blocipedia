@@ -14,14 +14,20 @@
       <div class="container"><%- content %></div>
 
       <% if(currentUser) { %>
+        <!-- new wiki button -->
         <a href="/wikis/new" class="btn btn-success">New Wiki</a>
-        <% if(currentUser) { %>
-          <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit Wiki</a>
-          <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-            <button type="submit" class="btn btn-danger">Delete Wiki</button>
-          </form>
-        <% } %>
+
+        <!-- edit wiki button -->
+        <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit Wiki</a>
+
+        <!-- delete wiki button -->
+        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+          <button type="submit" class="btn btn-danger">Delete Wiki</button>
+        </form>
       <% } %>
+
+      <% include ../collaborators/collaborating.ejs %>
+
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

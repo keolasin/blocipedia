@@ -21,7 +21,7 @@ describe("Collaborator", () => {
       })
       .then((user) => {
         this.user = user;
-
+        // create a wiki
         Wiki.create({
           title: "How to take care of a bicycle",
           body: "First you need to buy a bicycle",
@@ -30,7 +30,7 @@ describe("Collaborator", () => {
         })
         .then((wiki) => {
           this.wiki = wiki;
-
+          // create a collaborator object to associate wiki and users
           Collaborator.create({
             userId: this.user.id,
             wikiId: this.wiki.id
